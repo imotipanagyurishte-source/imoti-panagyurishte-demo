@@ -1,0 +1,21 @@
+CREATE TABLE customer_accounts (
+ id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+ full_name VARCHAR(160) NOT NULL,
+ phone_e164 VARCHAR(20) NOT NULL UNIQUE,
+ email VARCHAR(190) NULL,
+ phone_verified_at DATETIME NULL,
+ status ENUM('pending','active','blocked') NOT NULL DEFAULT 'pending',
+ created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+ updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+ INDEX idx_customer_email (email)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+CREATE TABLE customer_sms_challenges (
+ id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+ phone_e164 VARCHAR(20) NOT NULL,
+ code_hash CHAR(64) NOT NULL,
+ expires_at DATETIME NOT NULL,
+ attempts TINYINT UNSIGNED NOT NULL DEFAULT 0,
+ consumed_at DATETIME NULL,
+ created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+ INDEX idx_phone_created (phone_e164,created_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
