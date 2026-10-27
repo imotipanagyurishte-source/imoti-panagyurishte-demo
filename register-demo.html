@@ -1,2 +1,38 @@
 <!doctype html><html lang="bg"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Регистрация | Имоти Панагюрище</title><style>
-:root{font-family:system-ui,-apple-system,Segoe UI,sans-serif;color:#16283b;background:#f4f6f9}*{box-sizing:border-box}body{margin:0}.wrap{max-width:460px;margin:6vh auto;padding:22px}.card{background:white;border-radius:22px;padding:32px;box-shadow:0 14px 45px #142e481c}h1{font-size:26px;margin:0 0 8px}p{color:#64758a;line-height:1.5}label{display:block;font-weight:650;margin:18px 0 7px}input{width:100%;padding:14px;border:1px solid #cbd5e1;border-radius:11px;font:inherit}button{width:100%;margin-top:22px;background:#b58c4d;color:#fff;border:0;padding:15px;border-radius:11px;font-size:16px;font-weight:750;cursor:pointer}button:disabled{opacity:.55;cursor:not-allowed}.hint{font-size:13px}.notice{background:#fff7e6;border:1px solid #e7d5ad;padding:12px;border-radius:10px;font-size:13px}.check{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:#45556b;margin-top:18px}.check input{width:auto;margin-top:3px}.hidden{display:none}.back{color:#2c4969;text-decoration:none;font-weight:650}.ok{color:#16704c;font-weight:700}</style></head><body><main class="wrap"><a class="back" href="index.html">← Към имотите</a><section class="card"><h1>Създайте профил</h1><p>Само име и телефон. Без парола.</p><div class="notice"><strong>Демонстрация:</strong> Формата показва как ще изглежда регистрацията. SMS не се изпраща и лични данни не се съхраняват. Не въвеждайте реален телефон.</div><form id="form"><label for="name">Име и фамилия *</label><input id="name" name="name" autocomplete="name" required minlength="3" placeholder="Вашето име"><label for="phone">Телефон *</label><input id="phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" required pattern="(\\+359|0)8[789][0-9]{7}" placeholder="08XXXXXXXX"><label for="email">Имейл (по желание)</label><input id="email" name="email" type="email" autocomplete="email" placeholder="example@email.com"><label class="check"><input type="checkbox" required> <span>Запознат/а съм с условията за ползване и информацията за обработване на лични данни (ще бъдат публикувани преди реалния старт).</span></label><button type="submit">Продължи към SMS потвърждение →</button></form><div id="next" class="hidden"><p class="ok">✓ Формата е попълнена успешно.</p><p>В реалния сайт тук ще получите шестцифрен SMS код и ще потвърдите телефона си.</p><button id="again" type="button">Назад към формата</button></div><p class="hint">Разглеждането на имоти е свободно и не изисква регистрация.</p></section></main><script>const form=document.getElementById('form'),next=document.getElementById('next');form.addEventListener('submit',e=>{e.preventDefault();if(!form.reportValidity())return;form.classList.add('hidden');next.classList.remove('hidden')});document.getElementById('again').onclick=()=>{next.classList.add('hidden');form.classList.remove('hidden')};</script></body></html>
+:root{font-family:system-ui,-apple-system,Segoe UI,sans-serif;color:#16283b;background:#f4f6f9}*{box-sizing:border-box}body{margin:0}.wrap{max-width:460px;margin:6vh auto;padding:22px}.card{background:white;border-radius:22px;padding:32px;box-shadow:0 14px 45px #142e481c}h1{font-size:26px;margin:0 0 8px}p{color:#64758a;line-height:1.5}label{display:block;font-weight:650;margin:18px 0 7px}input{width:100%;padding:14px;border:1px solid #cbd5e1;border-radius:11px;font:inherit}button{width:100%;margin-top:22px;background:#b58c4d;color:#fff;border:0;padding:15px;border-radius:11px;font-size:16px;font-weight:750;cursor:pointer}button:disabled{opacity:.55;cursor:not-allowed}.hint{font-size:13px}.notice{background:#fff7e6;border:1px solid #e7d5ad;padding:12px;border-radius:10px;font-size:13px}.check{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:#45556b;margin-top:18px}.check input{width:auto;margin-top:3px}.hidden{display:none}.back{color:#2c4969;text-decoration:none;font-weight:650}.ok{color:#16704c;font-weight:700}</style></head><body><main class="wrap"><a class="back" href="index.html">← Към имотите</a><section class="card"><h1 id="heading">Създайте профил</h1><p>Само име и телефон. Без парола.</p><div class="notice"><strong>Демонстрация:</strong> Формата показва как ще изглежда регистрацията. SMS не се изпраща и лични данни не се съхраняват. Не въвеждайте реален телефон.</div><form id="form"><label for="name">Име и фамилия *</label><input id="name" name="name" autocomplete="name" required minlength="3" placeholder="Вашето име"><label for="phone">Телефон *</label><input id="phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" required pattern="(\\+359|0)8[789][0-9]{7}" placeholder="08XXXXXXXX"><label for="email">Имейл (по желание)</label><input id="email" name="email" type="email" autocomplete="email" placeholder="example@email.com"><label class="check"><input type="checkbox" required> <span>Запознат/а съм с условията за ползване и информацията за обработване на лични данни (ще бъдат публикувани преди реалния старт).</span></label><button type="submit">Продължи към SMS потвърждение →</button></form><div id="next" class="hidden"><p class="ok">✓ Данните са попълнени.</p><p id="explain">В реалния сайт тук ще получите шестцифрен SMS код и ще потвърдите телефона си.</p><button id="finish" type="button" class="hidden">Завърши демонстрацията →</button><button id="again" type="button">Назад към формата</button></div><p class="hint">Разглеждането на имоти е свободно и не изисква регистрация.</p></section></main><script>
+const form=document.getElementById('form'),next=document.getElementById('next');
+const fromPublish=new URLSearchParams(location.search).get('from')==='publish';
+let draft=null;
+if(fromPublish){try{draft=JSON.parse(sessionStorage.getItem('imoti_demo_pending_property')||'null')}catch{}}
+if(draft){
+ document.getElementById('heading').textContent='Последна стъпка: потвърждение';
+ form.elements.name.value=draft.contactName||'';
+ form.elements.phone.value=draft.phone||'';
+ form.elements.email.value=draft.email||'';
+}
+form.addEventListener('submit',e=>{
+ e.preventDefault();if(!form.reportValidity())return;
+ form.classList.add('hidden');next.classList.remove('hidden');
+ if(draft){
+  document.getElementById('explain').textContent='В реалния сайт тук ще въведете получения SMS код. В тази демонстрация можете да завършите процеса без истински SMS. Обявата ще се запази само в този браузър като чакаща проверка.';
+  document.getElementById('finish').classList.remove('hidden');
+ }
+});
+document.getElementById('again').onclick=()=>{next.classList.add('hidden');form.classList.remove('hidden')};
+document.getElementById('finish').onclick=()=>{
+ if(!draft)return;
+ draft.contactName=form.elements.name.value.trim();
+ draft.phone=form.elements.phone.value.trim();
+ draft.email=form.elements.email.value.trim();
+ draft.status='demo-pending';
+ const key='imoti_demo_submissions';
+ try{
+  const parsed=JSON.parse(localStorage.getItem(key)||'[]');
+  const items=Array.isArray(parsed)?parsed:[];
+  items.push(draft);
+  localStorage.setItem(key,JSON.stringify(items));
+  sessionStorage.removeItem('imoti_demo_pending_property');
+  next.innerHTML='<p class="ok">✓ Демонстрацията е завършена!</p><p>Обявата е запазена само в този браузър. Не е изпратена към агенцията, не е създаден истински профил и не е изпратен SMS.</p><a class="back" href="admin-demo.html">Виж обявата в демо панела →</a>';
+ }catch{document.getElementById('explain').textContent='Неуспешно локално запазване. Проверете настройките на браузъра.'}
+};
+</script></body></html>
