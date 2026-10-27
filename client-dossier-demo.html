@@ -7,7 +7,7 @@
 <main><h1>Клиентско досие</h1><p class="notice">Демонстрация: данните са примерни или запазени само в този браузър. Няма реална клиентска база или защитен достъп. Не въвеждайте истински лични данни.</p>
 <div class="card"><label for="client">Избери клиент: </label><select id="client"></select> <button id="open">Отвори досие</button></div>
 <div id="dossier" hidden><div class="card"><h2 id="name"></h2><p id="contact" class="muted"></p></div>
-<div class="grid"><section class="card"><h2>🏠 Имоти</h2><div id="properties"></div></section><section class="card"><h2>📄 Договори</h2><p id="contracts"></p></section><section class="card"><h2>📅 Огледи</h2><p id="viewings"></p></section><section class="card"><h2>💶 Сделки</h2><p>Няма записани сделки в демонстрацията.</p></section><section class="card"><h2>💬 Бележки</h2><div id="notes"></div><textarea id="note" maxlength="500" placeholder="Добави примерна бележка"></textarea><button id="save">Запази бележката</button></section><section class="card"><h2>🔔 Задачи и документи</h2><p>Тук ще се показват свързаните задачи и документи след интеграцията със защитен сървър.</p></section></div></div></main>
+<div class="grid"><section class="card"><h2>🏠 Имоти</h2><div id="properties"></div></section><section class="card" id="property-detail" hidden><h2>🏡 Досие на имота</h2><div id="property-info"></div><button id="back-property">Затвори досието</button></section><section class="card"><h2>📄 Договори</h2><p id="contracts"></p></section><section class="card"><h2>📅 Огледи</h2><p id="viewings"></p></section><section class="card"><h2>💶 Сделки</h2><p>Няма записани сделки в демонстрацията.</p></section><section class="card"><h2>💬 Бележки</h2><div id="notes"></div><textarea id="note" maxlength="500" placeholder="Добави примерна бележка"></textarea><button id="save">Запази бележката</button></section><section class="card"><h2>🔔 Задачи и документи</h2><p>Тук ще се показват свързаните задачи и документи след интеграцията със защитен сървър.</p></section></div></div></main>
 <script>
 const listingsKey='imoti_demo_submissions',notesKey='imoti_demo_client_notes';
 function stored(key,otherwise){try{return JSON.parse(localStorage.getItem(key))||otherwise}catch{return otherwise}}
@@ -32,12 +32,12 @@ function show(){
  document.getElementById('name').textContent=c.name||'Клиент';
  document.getElementById('contact').textContent='Телефон: '+(c.phone||'—')+' · Имейл: '+(c.email||'—');
  const root=document.getElementById('properties');root.replaceChildren();
- for(const x of c.items)addLine(root,(x.title||'Имот')+' · '+(x.price||'—')+' € · '+(x.status||'чернова'));
+ c.items.forEach(x=>{const b=document.createElement('button');b.textContent=(x.title||'Имот')+' · '+(x.price||'—')+' € →';b.style.margin='6px';b.onclick=()=>openProperty(c,x);root.append(b)});document.getElementById('property-detail').hidden=true;
  document.getElementById('contracts').textContent=selected==='sample'?'Един подписан и един очакващ договор (пример).':'Все още няма свързани договори.';
  document.getElementById('viewings').textContent=selected==='sample'?'Един предстоящ оглед (пример).':'Няма записани огледи.';
  renderNotes();
 }
-document.getElementById('open').addEventListener('click',show);
+function openProperty(client,item){const panel=document.getElementById('property-detail'),info=document.getElementById('property-info');info.replaceChildren();for(const [label,value] of [['Имот',item.title],['Собственик',client.name],['Цена',item.price?item.price+' €':'—'],['Град',item.city],['Площ',item.area?item.area+' м²':'—'],['Описание',item.description],['Статус',item.status],['Договор','Предстои свързване'],['Огледи','Предстои свързване'],['Купувачи','Предстои свързване']])addLine(info,label+': '+(value||'—'));panel.hidden=false;panel.scrollIntoView({behavior:'smooth'});}document.getElementById('back-property').onclick=()=>{document.getElementById('property-detail').hidden=true};document.getElementById('open').addEventListener('click',show);
 document.getElementById('save').addEventListener('click',()=>{
  const input=document.getElementById('note'),value=input.value.trim();if(!value||!selected)return;
  const all=stored(notesKey,{});if(!Array.isArray(all[selected]))all[selected]=[];
